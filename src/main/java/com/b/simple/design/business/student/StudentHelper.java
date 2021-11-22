@@ -55,11 +55,18 @@ public class StudentHelper {
     */
         
     public String willQualifyForQuiz(int marks1, int marks2, boolean isMaths) {
-        if ((isMaths ? marks1 <= 25 : marks1 <= 20)
-                || (isMaths ? marks2 <= 25 : marks2 <= 20)) return "NO";
-        if ((isMaths ? marks1 >= 85 : marks1 >= 80)
-                || (isMaths ? marks2 >= 85 : marks2 >= 80)) return "YES";
+        if (isNotGood(marks1, isMaths) || isNotGood(marks2, isMaths)) return "NO";
+        if (isGood(marks1, isMaths) || isGood(marks2, isMaths)) return "YES";
         return "MAYBE";
-    }	
+    }
 
+	private boolean isNotGood(int marks1, boolean isMaths) {
+		int extraLimit = isMaths ? 5: 0;
+		return marks1 <= 20 + extraLimit;
+	}
+
+	private boolean isGood(int marks1, boolean isMaths) {
+		int extraLimit = isMaths ? 5: 0;
+		return marks1 >= 80 + extraLimit;
+	}
 }
