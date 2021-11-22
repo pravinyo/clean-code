@@ -2,10 +2,12 @@ package com.b.simple.design.business.student;
 public class StudentHelper {
 
 	public static final int GRADE_B_LOWER_LIMIT = 51;
+	public static final int GRADE_A_LOWER_LIMIT = 91;
 	public static final int GRADE_B_UPPER_LIMIT = 80;
 	public static final int EXTRA_FOR_MATHS = 10;
 
-	/* PROBLEM 1 */	
+
+	/* PROBLEM 1 */
 	/*
 	* You get a grade B if marks are between 51 and 80 (both inclusive). Except for Maths where the upper limit is increased by 10.
 	*/
@@ -25,26 +27,15 @@ public class StudentHelper {
 	*/
 
 	public String getGrade(int mark, boolean isMaths) {
-		String grade = "C";
-		
-		if (isGradeA(mark, isMaths))
-			grade = "A";
-		else if (isBGrade(mark, isMaths)) {
-			grade = "B";
-		}
-		return grade;
-	}
+		int extraLimit = isMaths ? 5 : 0;
 
-	private boolean isGradeA(int mark, boolean isMaths) {
-		int lowerLimitForAGrade = isMaths ? 95
-				: 90;
-		return mark > lowerLimitForAGrade;
-	}
+		if (mark >= GRADE_A_LOWER_LIMIT + extraLimit)
+			return  "A";
 
-	private boolean isBGrade(int mark, boolean isMaths) {
-		int lowerLimitGradeB = isMaths ? 55
-				: 50;
-		return mark > lowerLimitGradeB && mark < 90;
+		if (mark >= GRADE_B_LOWER_LIMIT + extraLimit)
+			return "B";
+
+		return "C";
 	}
 
     /*  PROBLEM 3
