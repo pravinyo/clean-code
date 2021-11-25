@@ -4,6 +4,8 @@ import com.c.refactoring.StringUtils;
 
 public class Movie {
 
+    public static final String RATING_TYPE_B = "B";
+    public static final String RATING_TYPE_A = "A";
     String rating;
 
     public Movie(String rating) {
@@ -15,25 +17,30 @@ public class Movie {
         return rating;
     }
 
-    /*Axx or By
-    Where x represents any digit between 0 and 9, and y represents 
-    any digit between 1 and 4*/
     public boolean isValidRating() {
-        if (this.getRating() != null) {
-            if (this.getRating().substring(0, 1).equalsIgnoreCase("B")
-                    && this.getRating().length() == 2) {
-                if (StringUtils.isNumeric(this.getRating().substring(1, 2))
-                        && Integer.parseInt(this.getRating().substring(1, 2)) > 0
-                        && Integer.parseInt(this.getRating().substring(1, 2)) < 5)
-                    return true;
+        String rating = this.getRating();
+        if (rating == null) return false;
+        if (isValidBRating(rating)) return true;
+        return isValidARating(rating);
+    }
 
-            } else if (this.getRating().substring(0, 1).equalsIgnoreCase("A")
-                    && this.getRating().length() == 3
-                    && StringUtils.isNumeric(this.getRating().substring(1, 3)))
-                return true;
+    private boolean isValidARating(String rating) {
+        String firstChar = rating.substring(0, 1);
 
-        }
-        return false;
+        return firstChar.equalsIgnoreCase(RATING_TYPE_A)
+                && rating.length() == 3
+                && StringUtils.isNumeric(rating.substring(1, 3));
+    }
+
+    private boolean isValidBRating(String rating) {
+        String firstChar = rating.substring(0, 1);
+        String secondChar = rating.substring(1, 2);
+
+        return firstChar.equalsIgnoreCase(RATING_TYPE_B)
+                && (rating.length() == 2)
+                && StringUtils.isNumeric(secondChar)
+                && Integer.parseInt(secondChar) > 0
+                && Integer.parseInt(secondChar) < 5;
     }
 
     public void setRating(String rating) {
