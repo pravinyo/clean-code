@@ -2,10 +2,13 @@ package com.c.refactoring.movie;
 
 import com.c.refactoring.StringUtils;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Movie {
 
-    public static final String RATING_TYPE_B = "B";
     public static final String RATING_TYPE_A = "A";
+    public static final List<String> B_RATINGS_LIST = Arrays.asList("B1", "B2", "B3", "B4");
     String rating;
 
     public Movie(String rating) {
@@ -33,14 +36,7 @@ public class Movie {
     }
 
     private boolean isValidBRating(String rating) {
-        String firstChar = rating.substring(0, 1);
-        String secondChar = rating.substring(1, 2);
-
-        return firstChar.equalsIgnoreCase(RATING_TYPE_B)
-                && (rating.length() == 2)
-                && StringUtils.isNumeric(secondChar)
-                && Integer.parseInt(secondChar) > 0
-                && Integer.parseInt(secondChar) < 5;
+        return B_RATINGS_LIST.contains(rating);
     }
 
     public void setRating(String rating) {
